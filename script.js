@@ -50,10 +50,10 @@
 // function draw() {
 //     clear();
 //     t += 0.8; // Increment time for animation
-    
+
 //     // Determine the scaling factor based on temperature
 //     let scaleFactor = 1; // Default scale factor
-    
+
 
 //     if (weatherData.tempF < 30) {
 //         scaleFactor = 0.3; // Smaller logo for colder temperatures
@@ -127,33 +127,33 @@
 //     // Add padding equal to the maximum distortion amount
 //     let padding = 15; // slightly larger than the max distortion of 5
 //     let warpedImg = createImage(logo.width + padding*2, logo.height + padding*2);
-    
+
 //     warpedImg.loadPixels();
 //     logo.loadPixels();
-    
-    
+
+
 //     for (let y = 0; y < warpedImg.height; y++) {
 //       for (let x = 0; x < warpedImg.width; x++) {
 //         let index = (x + y * warpedImg.width) * 4;
-        
+
 //         // Map coordinates back to the original logo space (removing padding)
 //         let logoX = x - padding;
 //         let logoY = y - padding;
 //         //trying to adjust padding for logo alignment
-        
-        
+
+
 //         // Apply edge-aware distortion
 //         let offsetX = 40 * sin(logoY * 0.1 + t * 3) ;
 //         let offsetY = 5 * cos(logoX * 0.1 + t * 3) ;
-        
+
 //         // Calculate the source position from the original logo
 //         let sourceX = constrain(logoX - offsetX, 0, logo.width - 1);
 //         let sourceY = constrain(logoY - offsetY, 0, logo.height - 2);
-        
+
 //         // Only copy pixels if the source is within the original logo
 //         if (sourceX >= 0 && sourceX < logo.width && sourceY >= 0 && sourceY < logo.height) {
 //           let sourceIndex = (int(sourceX) + int(sourceY) * logo.width) * 4;
-          
+
 //           // Copy the color data
 //           warpedImg.pixels[index] = logo.pixels[sourceIndex];
 //           warpedImg.pixels[index + 1] = logo.pixels[sourceIndex + 1];
@@ -165,9 +165,9 @@
 //         }
 //       }
 //     }
-    
+
 //     warpedImg.updatePixels();
-    
+
 //     // Center the padded image, accounting for the padding
 //     image(warpedImg, -logo.width/2 - padding, -logo.height/2 - padding);
 //   }
@@ -180,7 +180,7 @@
 //     try {
 //         const response = await fetch(url, options);
 //         const result = await response.json();
-        
+
 //         let tempF = result.main.temp; // Temperature in Fahrenheit
 //         let tempC = (tempF - 32) * 5 / 9; // Convert Fahrenheit to Celsius
 //         let weatherCondition = result.weather[0].main; // "Rain", "Clear", "Snow"
@@ -290,13 +290,13 @@ let weatherData = {
   snow: 0,
 };
 
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "51c0316e31mshee4f7efa52e21a5p1bb922jsnffdf78609987",
-    "X-RapidAPI-Host": "open-weather13.p.rapidapi.com",
-  },
-};
+// const options = {
+//   method: "GET",
+//   headers: {
+//     "X-RapidAPI-Key": "51c0316e31mshee4f7efa52e21a5p1bb922jsnffdf78609987",
+//     "X-RapidAPI-Host": "open-weather13.p.rapidapi.com",
+//   },
+// };
 
 // Logos as Image objects
 const logos = {};
@@ -431,9 +431,12 @@ function displayWeather() {
 }
 
 async function fetchWeather(city) {
-  const url = `https://open-weather13.p.rapidapi.com/city/${encodeURIComponent(city)}/EN`;
+  const API_KEY = "cebf68b4c847f21d968909c56a253e2d";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=imperial`;
+
+
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url);
     const result = await response.json();
 
     let tempF = result.main.temp;
